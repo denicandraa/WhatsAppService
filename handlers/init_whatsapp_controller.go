@@ -11,13 +11,13 @@ import (
 	waLog "go.mau.fi/whatsmeow/util/log"
 	"os"
 )
+
 var client *waClient.Client
 
 type WaInit struct {
-
 }
 
-func (u *WaInit)WhatsAppInit() {
+func (u *WaInit) WhatsAppInit() {
 	dbLog := waLog.Stdout("Database", "DEBUG", true)
 	// Make sure you add appropriate DB connector imports, e.g. github.com/mattn/go-sqlite3 for SQLite
 	container, err := sqlstore.New("sqlite3", "file:examplestore.db?_foreign_keys=on", dbLog)
@@ -31,11 +31,11 @@ func (u *WaInit)WhatsAppInit() {
 	}
 	clientLog := waLog.Stdout("Client", "DEBUG", true)
 	client = whatsmeow.NewClient(deviceStore, clientLog)
+	client.EnableAutoReconnect = true
 
 	waHandler := WaHandler{}
 
 	client.AddEventHandler(waHandler.eventHandler)
-
 
 	if client.Store.ID == nil {
 		// No ID stored, new login
