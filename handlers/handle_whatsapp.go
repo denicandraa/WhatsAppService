@@ -8,10 +8,11 @@ import (
 type WaHandler struct {
 }
 
-func (u *WaHandler)eventHandler(evt interface{}) {
+func (u *WaHandler) eventHandler(evt interface{}) {
 	switch v := evt.(type) {
 	case *events.Message:
 		fmt.Println(
 			"Received a message!", v.Message.GetConversation())
+
 	}
 }
